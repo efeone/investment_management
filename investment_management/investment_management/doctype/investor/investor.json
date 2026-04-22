@@ -8,7 +8,6 @@
  "field_order": [
   "investor_name",
   "type",
-  "linked_customer",
   "pan_tax_id",
   "contact_details",
   "bank_details",
@@ -30,12 +29,6 @@
    "label": "Type",
    "options": "Individual\nCompany",
    "reqd": 1
-  },
-  {
-   "fieldname": "linked_customer",
-   "fieldtype": "Link",
-   "label": "Linked Customer",
-   "options": "Customer"
   },
   {
    "fieldname": "pan_tax_id",
