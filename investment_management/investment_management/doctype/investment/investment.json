@@ -1,0 +1,131 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-04-22 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "investor",
+  "investment_date",
+  "investment_amount",
+  "investment_type",
+  "number_of_units_shares",
+  "rate_per_unit",
+  "total_value",
+  "company",
+  "project",
+  "lockin_period",
+  "expected_roi",
+  "status",
+  "investment_ledger"
+ ],
+ "fields": [
+  {
+   "fieldname": "investor",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Investor",
+   "options": "Investor",
+   "reqd": 1
+  },
+  {
+   "fieldname": "investment_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Investment Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "investment_amount",
+   "fieldtype": "Currency",
+   "label": "Investment Amount",
+   "reqd": 1
+  },
+  {
+   "fieldname": "investment_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Investment Type",
+   "options": "Equity\nLoan\nPartnership",
+   "reqd": 1
+  },
+  {
+   "fieldname": "number_of_units_shares",
+   "fieldtype": "Float",
+   "label": "Number of Units / Shares"
+  },
+  {
+   "fieldname": "rate_per_unit",
+   "fieldtype": "Currency",
+   "label": "Rate per Unit"
+  },
+  {
+   "fieldname": "total_value",
+   "fieldtype": "Currency",
+   "label": "Total Value"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "lockin_period",
+   "fieldtype": "Int",
+   "label": "Lock-in Period (Days)"
+  },
+  {
+   "fieldname": "expected_roi",
+   "fieldtype": "Percent",
+   "label": "Expected ROI %"
+  },
+  {
+   "default": "Active",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Active\nClosed",
+   "reqd": 1
+  },
+  {
+   "fieldname": "investment_ledger",
+   "fieldtype": "Table",
+   "label": "Investment Ledger",
+   "options": "Investment Ledger"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-04-22 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Investment Management",
+ "name": "Investment",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
