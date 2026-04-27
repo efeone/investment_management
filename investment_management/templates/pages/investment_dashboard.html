@@ -1,0 +1,207 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<div class="investment-dashboard-root">
+	<h1>Investment Performance Dashboard</h1>
+	<p>Colorful overview of investment amounts, dividend returns, and transaction history.</p>
+
+	<div class="summary-grid" id="summary-grid"></div>
+
+	<div class="panel-grid">
+		<section class="panel">
+			<h3>Investment by Month</h3>
+			<div class="bar-list" id="monthly-bars"></div>
+		</section>
+
+		<section class="panel">
+			<h3>Investment Split by Type</h3>
+			<div class="bar-list" id="type-bars"></div>
+		</section>
+
+		<section class="panel">
+			<h3>Portfolio Status</h3>
+			<div class="bar-list" id="status-bars"></div>
+		</section>
+	</div>
+
+	<section class="panel">
+		<h3>Recent Investment History</h3>
+		<div class="table-wrap">
+			<table class="history-table">
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th>Event</th>
+						<th>Investment</th>
+						<th>Category</th>
+						<th class="amount-col">Amount</th>
+					</tr>
+				</thead>
+				<tbody id="history-body"></tbody>
+			</table>
+		</div>
+	</section>
+</div>
+
+<style>
+.investment-dashboard-root {
+	padding: 2rem 0;
+}
+.investment-dashboard-root h1 {
+	font-weight: 800;
+	margin-bottom: 0.4rem;
+}
+.summary-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 1rem;
+	margin: 1.6rem 0;
+}
+.summary-card {
+	border-radius: 14px;
+	padding: 1rem;
+	color: #fff;
+	box-shadow: 0 10px 28px rgba(25, 31, 56, 0.15);
+}
+.summary-card h4 {
+	font-size: 0.88rem;
+	opacity: 0.9;
+	margin: 0;
+}
+.summary-card p {
+	font-size: 1.45rem;
+	font-weight: 700;
+	margin: 0.3rem 0 0;
+}
+.panel-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 1rem;
+	margin-bottom: 1rem;
+}
+.panel {
+	background: #ffffff;
+	border-radius: 14px;
+	padding: 1rem;
+	box-shadow: 0 8px 25px rgba(30, 30, 60, 0.09);
+	margin-bottom: 1rem;
+}
+.bar-item {
+	margin: 0.7rem 0;
+}
+.bar-meta {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.88rem;
+	margin-bottom: 0.25rem;
+}
+.bar-track {
+	width: 100%;
+	height: 12px;
+	background: #eef1f8;
+	border-radius: 999px;
+	overflow: hidden;
+}
+.bar-fill {
+	height: 12px;
+	border-radius: 999px;
+}
+.table-wrap {
+	overflow-x: auto;
+}
+.history-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+.history-table th,
+.history-table td {
+	padding: 0.65rem;
+	border-bottom: 1px solid #edf0f7;
+	font-size: 0.9rem;
+}
+.amount-col {
+	text-align: right;
+}
+.history-table td.amount {
+	text-align: right;
+	font-weight: 600;
+}
+</style>
+
+<script>
+(() => {
+	const data = JSON.parse({{ dashboard_data | tojson }});
+
+	const gradients = [
+		"linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%)",
+		"linear-gradient(135deg, #f7971e 0%, #ffd200 100%)",
+		"linear-gradient(135deg, #00b09b 0%, #96c93d 100%)",
+		"linear-gradient(135deg, #7f00ff 0%, #e100ff 100%)",
+		"linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%)",
+		"linear-gradient(135deg, #3f2b96 0%, #a8c0ff 100%)",
+	];
+
+	const currency = (value) =>
+		new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value || 0);
+
+	const summaryItems = [
+		{ label: "Total Invested", value: currency(data.summary.total_invested) },
+		{ label: "Current Value", value: currency(data.summary.total_current_value) },
+		{ label: "Estimated Dividend", value: currency(data.summary.estimated_dividend) },
+		{ label: "Withdrawals", value: currency(data.summary.total_withdrawals) },
+		{ label: "Active Investments", value: data.summary.active_investments },
+		{ label: "Closed Investments", value: data.summary.closed_investments },
+	];
+
+	const summaryGrid = document.getElementById("summary-grid");
+	summaryItems.forEach((item, index) => {
+		const card = document.createElement("article");
+		card.className = "summary-card";
+		card.style.background = gradients[index % gradients.length];
+		card.innerHTML = `<h4>${item.label}</h4><p>${item.value}</p>`;
+		summaryGrid.appendChild(card);
+	});
+
+	const renderBars = (targetId, items, paletteOffset = 0) => {
+		const target = document.getElementById(targetId);
+		const max = Math.max(...items.map((item) => item.value), 1);
+		if (!items.length) {
+			target.innerHTML = "<p>No data available.</p>";
+			return;
+		}
+		items.forEach((item, index) => {
+			const row = document.createElement("div");
+			row.className = "bar-item";
+			const width = ((item.value / max) * 100).toFixed(2);
+			row.innerHTML = `
+				<div class="bar-meta"><span>${item.label}</span><span>${currency(item.value)}</span></div>
+				<div class="bar-track"><div class="bar-fill" style="width:${width}%; background:${gradients[(index + paletteOffset) % gradients.length]};"></div></div>
+			`;
+			target.appendChild(row);
+		});
+	};
+
+	renderBars("monthly-bars", data.monthly_totals);
+	renderBars("type-bars", data.type_totals, 2);
+	renderBars("status-bars", data.status_totals, 4);
+
+	const historyBody = document.getElementById("history-body");
+	if (!data.history.length) {
+		historyBody.innerHTML = '<tr><td colspan="5">No transaction history found.</td></tr>';
+	} else {
+		data.history.forEach((entry) => {
+			const tr = document.createElement("tr");
+			const safeDate = entry.date ? new Date(entry.date).toLocaleDateString("en-US") : "-";
+			tr.innerHTML = `
+				<td>${safeDate}</td>
+				<td>${entry.label}</td>
+				<td>${entry.investment}</td>
+				<td>${entry.type}</td>
+				<td class="amount">${currency(entry.amount)}</td>
+			`;
+			historyBody.appendChild(tr);
+		});
+	}
+})();
+</script>
+{% endblock %}
