@@ -1,0 +1,66 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"investment_dashboard\",\"type\":\"shortcut\",\"data\":{\"color\":\"Blue\",\"doc_view\":\"\",\"label\":\"Investment Dashboard\",\"link_to\":\"/investment_dashboard\",\"stats_filter\":\"[]\",\"type\":\"URL\"}},{\"id\":\"investment_master\",\"type\":\"shortcut\",\"data\":{\"color\":\"Green\",\"doc_view\":\"List\",\"label\":\"Investments\",\"link_to\":\"Investment\",\"stats_filter\":\"[]\",\"type\":\"DocType\"}},{\"id\":\"investor_master\",\"type\":\"shortcut\",\"data\":{\"color\":\"Cyan\",\"doc_view\":\"List\",\"label\":\"Investors\",\"link_to\":\"Investor\",\"stats_filter\":\"[]\",\"type\":\"DocType\"}},{\"id\":\"dividend_rules\",\"type\":\"shortcut\",\"data\":{\"color\":\"Orange\",\"doc_view\":\"List\",\"label\":\"Dividend Rules\",\"link_to\":\"Dividend Rule\",\"stats_filter\":\"[]\",\"type\":\"DocType\"}}]",
+ "creation": "2026-04-27 00:00:00.000000",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "chart",
+ "idx": 0,
+ "indicator_color": "blue",
+ "is_hidden": 0,
+ "label": "Investment Management",
+ "links": [],
+ "modified": "2026-04-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Investment Management",
+ "name": "Investment Management",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ],
+ "sequence_id": 1.0,
+ "shortcuts": [
+  {
+   "color": "Blue",
+   "doc_view": "",
+   "label": "Investment Dashboard",
+   "link_to": "/investment_dashboard",
+   "stats_filter": "[]",
+   "type": "URL"
+  },
+  {
+   "color": "Green",
+   "doc_view": "List",
+   "label": "Investments",
+   "link_to": "Investment",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Cyan",
+   "doc_view": "List",
+   "label": "Investors",
+   "link_to": "Investor",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "label": "Dividend Rules",
+   "link_to": "Dividend Rule",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Investment Management"
+}
